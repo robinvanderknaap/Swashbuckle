@@ -8,6 +8,7 @@ namespace Swashbuckle.Models
     public class SwaggerSpecConfig
     {
         internal static readonly SwaggerSpecConfig Instance = new SwaggerSpecConfig();
+        private string _apiVersion;
 
         public static void Customize(Action<SwaggerSpecConfig> customize)
         {
@@ -28,6 +29,12 @@ namespace Swashbuckle.Models
         internal IDictionary<Type,ModelSpec> CustomTypeMappings { get; private set; }
         internal List<IOperationFilter> OperationFilters { get; private set; }
         internal List<IOperationSpecFilter> OperationSpecFilters { get; private set; }
+
+        public string ApiVersion
+        {
+            get { return string.IsNullOrWhiteSpace(_apiVersion) ? "1.0" : _apiVersion; }
+            set { _apiVersion = value; }
+        }
 
         public void GroupDeclarationsBy(Func<ApiDescription, string> declarationKeySelector)
         {
